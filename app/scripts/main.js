@@ -19,9 +19,9 @@ function updateSplit() {
     imgs.push(img2);
   }
   for (var i = 0; i < imgs.length; i++) {
-    var img = imgs[i];
-    minWidth = Math.min(img.width(), minWidth);
-    minHeight = Math.min(img.height(), minHeight);
+    var thisImg = imgs[i];
+    minWidth = Math.min(thisImg.width(), minWidth);
+    minHeight = Math.min(thisImg.height(), minHeight);
   }
   var numFolds = parseInt($('input[name=folds]').val());
   var canvas = document.getElementById('output');
