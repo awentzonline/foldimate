@@ -5,25 +5,27 @@ var $ = window.jQuery;
 function updateSplit() {
   var img0 = $('#preview0');
   var img1 = $('#preview1');
-  if (!(img0.length || img1.length)) {
-    return;
-  }
+  var img2 = $('#preview2');
   var minWidth = 999999999.2;
   var minHeight = 999999999.2;
   var imgs = [];
   if (img0.width()) {
     imgs.push(img0);
-    minWidth = Math.min(img0.width(), minWidth);
-    minHeight = Math.min(img0.height(), minHeight);
   }
   if (img1.width()) {
     imgs.push(img1);
-    minWidth = Math.min(img1.width(), minWidth);
-    minHeight = Math.min(img1.height(), minHeight);
+  }
+  if (img2.width()) {
+    imgs.push(img2);
+  }
+  for (var i = 0; i < imgs.length; i++) {
+    var img = imgs[i];
+    minWidth = Math.min(img.width(), minWidth);
+    minHeight = Math.min(img.height(), minHeight);
   }
   var numFolds = parseInt($('input[name=folds]').val());
   var canvas = document.getElementById('output');
-  canvas.width = minWidth * 2;
+  canvas.width = minWidth * imgs.length;
   canvas.height = minHeight;
   var context = canvas.getContext('2d');
 
@@ -56,7 +58,14 @@ $('input[name=image0]').change(function () {
 $('input[name=image1]').change(function () {
   readURL(this, '#preview1');
 });
-$('input[name=folds]').change(function () {
+$('input[name=image2]').change(function () {
+  readURL(this, '#preview2');
+});
+$('input[name=folds]').keyup(function () {
+  var val = $(this).val();
+  if (!val || isNaN(val)) {
+    return;
+  }
   updateSplit();
 });
 
